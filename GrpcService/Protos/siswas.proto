@@ -17,7 +17,7 @@ message SiswaLookupModel{
 message SiswaModel{
 	int32 siswaId =1;
 	string namaDepan = 2;
-	string namaBelakang = 3;
+	string namaBel = 3;
 	string sekolah = 4;
 }
 
