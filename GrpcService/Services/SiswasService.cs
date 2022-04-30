@@ -83,5 +83,43 @@ namespace GrpcService.Services
 
         }
 
+        public override Task<Reply> UpdateSiswa(SiswaModel req, ServerCallContext context)
+        {
+            var s = _db.Siswas.Find(req.SiswaId);
+
+            if (s == null)
+            {
+                return Task.FromResult(
+                  new Reply()
+                  {
+                      Result = $"Siswa {req.NamaDepan} {req.NamaBel} tidak ditemukan.",
+                      IsOk = false
+                  }
+                );
+            }
+
+            s.NamaDepan = req.NamaDepan;
+            s.NamaBel = req.NamaBel;
+            s.Sekolah = req.Sekolah;
+
+            _logger.LogInformation("Update student");
+
+            try
+            {
+                var returnVal = _db.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogInformation(ex.ToString());
+            }
+
+            return Task.FromResult(
+               new Reply()
+               {
+                   Result = $"Student {req.NamaDepan} {req.NamaBel} berhasil dirubah.",
+                   IsOk = true
+               }
+            );
+        }
     }
 }
