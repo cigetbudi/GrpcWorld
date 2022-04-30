@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+option csharp_namespace = "GrpcService.Protos";
+
+
+//Definisi Service Siswa 
+service RemoteSiswas{
+	rpc GetSiswaInfo (SiswaLookupModel) returns (SiswaModel);
+}
+
+//Request message
+message SiswaLookupModel{
+	int32 siswaId = 1;
+}
+
+//Response message
+message SiswaModel{
+	int32 siswaId =1;
+	string namaDepan = 2;
+	string namaBelakang = 3;
+	string sekolah = 4;
+}
+
+
+
+
