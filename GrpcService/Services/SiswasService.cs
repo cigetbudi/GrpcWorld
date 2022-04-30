@@ -20,14 +20,21 @@ namespace GrpcService.Services
             var siswa = _db.Siswas.Find(req.SiswaId);
 
             _logger.LogInformation("Sending siswa response");
-
-            if (siswa != null)
+            if (siswa == null)
+            {
+                _logger.LogError("Data tidak ditemukan");
+            }
+            else if (siswa != null)
             {
                 model.SiswaId = siswa.SiswaId;
-                model.NamaDepan = siswa.NamaDepan;
+                model.NamaDepan = siswa.NamaDepan;  
                 model.NamaBel = siswa.NamaBel;
                 model.Sekolah = siswa.Sekolah;
 
+            }
+            else
+            {
+                _logger.LogError("Gagal koneksi");
             }
 
             return Task.FromResult(model);

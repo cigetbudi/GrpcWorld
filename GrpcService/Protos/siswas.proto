@@ -6,7 +6,24 @@ option csharp_namespace = "GrpcService.Protos";
 //Definisi Service Siswa 
 service RemoteSiswas{
 	rpc GetSiswaInfo (SiswaLookupModel) returns (SiswaModel);
+	rpc AddSiswa(SiswaModel) returns (Reply);
+	rpc UpdateSiswa(SiswaModel) returns (Reply);
+	rpc DeleteSiswa(SiswaLookupModel) returns (Reply);
+	rpc GetAllSiswa(Empty) return (SiswaList);
+
 }
+
+message Empty{}
+
+message SiswaList{
+	repeated SiswaModel items = 1;
+}
+
+message Reply{
+	string result = 1;
+	bool isOk = 2;
+}
+
 
 //Request message
 message SiswaLookupModel{
