@@ -156,5 +156,38 @@ namespace GrpcService.Services
                }
             );
         }
+
+        public override Task<SiswaList> GetAllSiswa(Empty req, ServerCallContext context)
+        {
+            _logger.LogInformation("Get all Siswa");
+
+            SiswaList list = new SiswaList();
+
+            try
+            {
+                List<SiswaModel> studentList = new List<SiswaModel>();
+
+                var students = _db.Siswas.ToList();
+
+                foreach (var c in students)
+                {
+                    studentList.Add(new SiswaModel()
+                    {
+                        SiswaId = c.SiswaId,
+                        NamaDepan = c.NamaDepan,
+                        NamaBel = c.NamaBel,
+                        Sekolah = c.Sekolah,
+                    });
+                }
+
+                list.Items.AddRange(studentList);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogInformation(ex.ToString());
+            }
+
+            return Task.FromResult(list);
+        }
     }
 }
