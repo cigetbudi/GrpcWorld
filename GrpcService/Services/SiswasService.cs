@@ -121,5 +121,40 @@ namespace GrpcService.Services
                }
             );
         }
+        public override Task<Reply> DeleteSiswa(SiswaLookupModel req, ServerCallContext context)
+        {
+            var s = _db.Siswas.Find(req.SiswaId);
+
+            if (s == null)
+            {
+                return Task.FromResult(
+                  new Reply()
+                  {
+                      Result = $"Siswa dengan ID {req.SiswaId} tidak dapat ditemukan.",
+                      IsOk = false
+                  }
+                );
+            }
+
+            _logger.LogInformation("Hapus Siswa");
+
+            try
+            {
+                _db.Siswas.Remove(s);
+                var returnVal = _db.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogInformation(ex.ToString());
+            }
+
+            return Task.FromResult(
+               new Reply()
+               {
+                   Result = $"Siswa dengan ID {req.SiswaId} berhasil dihapus.",
+                   IsOk = true
+               }
+            );
+        }
     }
 }
