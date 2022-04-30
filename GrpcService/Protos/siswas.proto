@@ -9,7 +9,7 @@ service RemoteSiswas{
 	rpc AddSiswa(SiswaModel) returns (Reply);
 	rpc UpdateSiswa(SiswaModel) returns (Reply);
 	rpc DeleteSiswa(SiswaLookupModel) returns (Reply);
-	rpc GetAllSiswa(Empty) return (SiswaList);
+	rpc GetAllSiswa(Empty) returns (SiswaList);
 
 }
 
